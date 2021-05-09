@@ -74,3 +74,5 @@ async def unmute(ctx,member:discord.Member):
     await member.send(f'Тебя досрочно размутили на {guild.name}')
 
 token = os.environ.get("BOT_TOKEN")
+
+bot.run(token)
