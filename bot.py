@@ -26,46 +26,51 @@ async def info_player(ctx,member:discord.Member):
 
 @bot.command(pass_context=True)
 @commands.has_permissions(administrator=True)
-async def id(ctx,idchannel,idbot):
-        async def ban(ctx,member:discord.Member,reason):
-            channel = bot.get_channel(idchannel)
-            emb = discord.Embed(title="Кик",color=0xff0000)
-            emb.add_field(name='Модератор',value=ctx.message.author.mention,inline=False)
-            emb.add_field(name='Нарушитель',value=member.mention,inline=False)
-            emb.add_field(name='Причина',value=reason,inline=False)
-            await member.ban()
-            await channel.send(embed = emb)
+async def ban(ctx,member:discord.Member,reason):
+    channel = bot.get_channel(idc)
+    emb = discord.Embed(title="Кик",color=0xff0000)
+    emb.add_field(name='Модератор',value=ctx.message.author.mention,inline=False)
+    emb.add_field(name='Нарушитель',value=member.mention,inline=False)
+    emb.add_field(name='Причина',value=reason,inline=False)
+    await member.ban()
+    await channel.send(embed = emb)
+
+@bot.command(pass_context=True)
+@commands.has_permissions(administrator=True)
+async def kick(ctx,member:discord.Member,reason):
+    channel = bot.get_channel(idc)
+    emb = discord.Embed(title="Кик", color=0xff0000)
+    emb.add_field(name='Модератор', value=ctx.message.author.mention, inline=False)
+    emb.add_field(name='Нарушитель', value=member.mention, inline=False)
+    emb.add_field(name='Причина', value=reason, inline=False)
+    await channel.send(embed = emb)
 
 
-        async def kick(ctx,member:discord.Member,reason):
-            channel = bot.get_channel(idchannel)
-            emb = discord.Embed(title="Кик", color=0xff0000)
-            emb.add_field(name='Модератор', value=ctx.message.author.mention, inline=False)
-            emb.add_field(name='Нарушитель', value=member.mention, inline=False)
-            emb.add_field(name='Причина', value=reason, inline=False)
-            await member.kick()
-            await channel.send(embed = emb)
+@bot.command(pass_context=True)
+@commands.has_permissions(administrator=True)
+async def clear(ctx, amount=10):
+    await ctx.message.channel.purge(limit=amount + 1)
+    await ctx.send(f'Успешно удалено {amount} сообщений')
 
-        async def clear(ctx, amount=10):
-            await ctx.message.channel.purge(limit=amount + 1)
-            await ctx.send(f'Успешно удалено {amount} сообщений')
+@bot.command(pass_context=True)
+@commands.has_permissions(administrator=True)
+async def mute(ctx,member:discord.Member,time:int,*,reason=None):
+    guild = ctx.guild
+    muterole = discord.utils.get(guild.roles,idb)
+    await member.add_roles(muterole,reason=reason)
+    await ctx.send(f'{member} замьючен на {time} минут за {reason}')
+    await member.send(f'Ты замьючен на {guild.name} за {reason} на {time} минут.')
+    await asyncio.sleep(time*60)
+    await member.remove_roles(muterole)
 
-
-        async def mute(ctx,member:discord.Member,time:int,*,reason=None):
-            guild = ctx.guild
-            muterole = discord.utils.get(guild.roles,idbot)
-            await member.add_roles(muterole,reason=reason)
-            await ctx.send(f'{member} замьючен на {time} минут за {reason}')
-            await member.send(f'Ты замьючен на {guild.name} за {reason} на {time} минут.')
-            await asyncio.sleep(time*60)
-            await member.remove_roles(muterole)
-
-        async def unmute(ctx,member:discord.Member):
-            guild = ctx.guild
-            muterole = discord.utils.get(guild.roles,idbot)
-            await member.remove_roles(muterole)
-            await ctx.send(f"C {member} досрочно снят мут")
-            await member.send(f'Тебя досрочно размутили на {guild.name}')
+@bot.command(pass_context=True)
+@commands.has_permissions(administrator=True)
+async def unmute(ctx,member:discord.Member):
+    guild = ctx.guild
+    muterole = discord.utils.get(guild.roles,idb)
+    await member.remove_roles(muterole)
+    await ctx.send(f"C {member} досрочно снят мут")
+    await member.send(f'Тебя досрочно размутили на {guild.name}')
 
 
 @bot.command(pass_context=True)
