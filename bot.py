@@ -25,9 +25,19 @@ async def info_player(ctx,member:discord.Member):
     await ctx.send(embed = emb)
 
 @bot.command(pass_context=True)
+@commands.has_permissions()
+async def info (ctx):
+    await ctx.send("~info_player\n~kick [Ник] [Причина]\n~ban [Ник] [Причина]\n~mute [Ник] [Причина]\n~unmute [Ник]\n~clear [Количество сообщений]\nВерсия:0.1")
+
+
+
+
+
+
+@bot.command(pass_context=True)
 @commands.has_permissions(administrator=True)
 async def ban(ctx,member:discord.Member,reason):
-    channel = bot.get_channel(idc)
+    channel = bot.get_channel(744584045807271989)
     emb = discord.Embed(title="Кик",color=0xff0000)
     emb.add_field(name='Модератор',value=ctx.message.author.mention,inline=False)
     emb.add_field(name='Нарушитель',value=member.mention,inline=False)
@@ -38,7 +48,7 @@ async def ban(ctx,member:discord.Member,reason):
 @bot.command(pass_context=True)
 @commands.has_permissions(administrator=True)
 async def kick(ctx,member:discord.Member,reason):
-    channel = bot.get_channel(idc)
+    channel = bot.get_channel(744584045807271989)
     emb = discord.Embed(title="Кик", color=0xff0000)
     emb.add_field(name='Модератор', value=ctx.message.author.mention, inline=False)
     emb.add_field(name='Нарушитель', value=member.mention, inline=False)
@@ -56,7 +66,7 @@ async def clear(ctx, amount=10):
 @commands.has_permissions(administrator=True)
 async def mute(ctx,member:discord.Member,time:int,*,reason=None):
     guild = ctx.guild
-    muterole = discord.utils.get(guild.roles,idb)
+    muterole = discord.utils.get(guild.roles,id=765555149879771157)
     await member.add_roles(muterole,reason=reason)
     await ctx.send(f'{member} замьючен на {time} минут за {reason}')
     await member.send(f'Ты замьючен на {guild.name} за {reason} на {time} минут.')
@@ -67,7 +77,7 @@ async def mute(ctx,member:discord.Member,time:int,*,reason=None):
 @commands.has_permissions(administrator=True)
 async def unmute(ctx,member:discord.Member):
     guild = ctx.guild
-    muterole = discord.utils.get(guild.roles,idb)
+    muterole = discord.utils.get(guild.roles,id=765555149879771157)
     await member.remove_roles(muterole)
     await ctx.send(f"C {member} досрочно снят мут")
     await member.send(f'Тебя досрочно размутили на {guild.name}')
@@ -82,7 +92,6 @@ async def gay(ctx):
 @bot.event
 async def on_ready():
     print("ready")
-
 token = os.environ.get("BOT_TOKEN")
 
 bot.run(token)
