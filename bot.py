@@ -26,7 +26,7 @@ async def info_player(ctx,member:discord.Member):
 
 @bot.command(pass_context=True)
 @commands.has_permissions()
-async def info (ctx):
+async def info(ctx):
     await ctx.send("~info_player\n~kick [Ник] [Причина]\n~ban [Ник] [Причина]\n~mute [Ник] [Причина]\n~unmute [Ник]\n~clear [Количество сообщений]\nВерсия:0.1")
 
 
