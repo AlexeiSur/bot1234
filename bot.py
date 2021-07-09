@@ -11,6 +11,7 @@ bot = commands.Bot(command_prefix="~")
 
 
 
+
 @bot.command(pass_context=True)
 @commands.has_permissions()
 async def info_player(ctx,member:discord.Member):
@@ -89,9 +90,10 @@ async def gay(ctx):
     await ctx.send("админы пидоры")
 
 
+
 @bot.event
 async def on_ready():
     print("ready")
-token = os.environ.get("BOT_TOKEN")
-
+#token = os.environ.get("BOT_TOKEN")
+token = ("gWOTALu1B6n4lOAOpdIDkzQt1leLChEh")
 bot.run(token)
