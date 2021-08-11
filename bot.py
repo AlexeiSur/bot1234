@@ -76,6 +76,6 @@ async def unmute(ctx,member:discord.Member):
 @bot.event
 async def on_ready():
     print("ready")
-os.environ.get("BOT_TOKEN")
+token = os.environ.get("BOT_TOKEN")
 
 bot.run(token)
