@@ -1,19 +1,13 @@
-import os
 import discord
 from discord.ext import commands
 from discord.ext.commands import Bot
 import asyncio
 from discord import Activity, ActivityType, role
-
+import os
 bot = commands.Bot(command_prefix="~")
 
-
-
-
-
-
 @bot.command(pass_context=True)
-@commands.has_permissions()
+@commands.has_permissions(administrator=True)
 async def info_player(ctx,member:discord.Member):
     emb = discord.Embed(title='Информация о пользователе',color=0xff0000)
     emb.add_field(name="Когда присоединился:",value=member.joined_at,inline=False)
@@ -26,17 +20,7 @@ async def info_player(ctx,member:discord.Member):
     await ctx.send(embed = emb)
 
 @bot.command(pass_context=True)
-@commands.has_permissions()
-async def info(ctx):
-    await ctx.send("~info_player\n~kick [Ник] [Причина]\n~ban [Ник] [Причина]\n~mute [Ник] [Причина]\n~unmute [Ник]\n~clear [Количество сообщений]\nВерсия:0.1")
-
-
-
-
-
-
-@bot.command(pass_context=True)
-@commands.has_permissions(administrator=True)
+@commands.has_permissions(view_audit_log=True)
 async def ban(ctx,member:discord.Member,reason):
     channel = bot.get_channel(744584045807271989)
     emb = discord.Embed(title="Кик",color=0xff0000)
@@ -46,6 +30,7 @@ async def ban(ctx,member:discord.Member,reason):
     await member.ban()
     await channel.send(embed = emb)
 
+
 @bot.command(pass_context=True)
 @commands.has_permissions(administrator=True)
 async def kick(ctx,member:discord.Member,reason):
@@ -54,16 +39,20 @@ async def kick(ctx,member:discord.Member,reason):
     emb.add_field(name='Модератор', value=ctx.message.author.mention, inline=False)
     emb.add_field(name='Нарушитель', value=member.mention, inline=False)
     emb.add_field(name='Причина', value=reason, inline=False)
+    await member.kick()
     await channel.send(embed = emb)
-
 
 @bot.command(pass_context=True)
 @commands.has_permissions(administrator=True)
-async def clear(ctx, amount=10):
+async def clear(ctx,amount=10):
     await ctx.message.channel.purge(limit=amount + 1)
     await ctx.send(f'Успешно удалено {amount} сообщений')
 
 @bot.command(pass_context=True)
+async def info(ctx):
+    await ctx.send('~ban [Ник] [Причина]\n~mute [Ник] [Время в минутах] [Причина]\n~unmute [Ник]\n~kick [Ник] [Причина]\n~clear [Количество сообщений]\n~info_player')
+
+@bot.command()
 @commands.has_permissions(administrator=True)
 async def mute(ctx,member:discord.Member,time:int,*,reason=None):
     guild = ctx.guild
@@ -74,7 +63,7 @@ async def mute(ctx,member:discord.Member,time:int,*,reason=None):
     await asyncio.sleep(time*60)
     await member.remove_roles(muterole)
 
-@bot.command(pass_context=True)
+@bot.command()
 @commands.has_permissions(administrator=True)
 async def unmute(ctx,member:discord.Member):
     guild = ctx.guild
@@ -84,16 +73,10 @@ async def unmute(ctx,member:discord.Member):
     await member.send(f'Тебя досрочно размутили на {guild.name}')
 
 
-@bot.command(pass_context=True)
-@commands.has_permissions()
-async def gay(ctx):
-    await ctx.send("админы пидоры")
-
-
-
 @bot.event
 async def on_ready():
     print("ready")
-#token = os.environ.get("BOT_TOKEN")
 token = ("gWOTALu1B6n4lOAOpdIDkzQt1leLChEh")
+os.environ.get("BOT_TOKEN")
+
 bot.run(token)
