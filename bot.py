@@ -49,9 +49,9 @@ async def clear(ctx,amount=10):
 
 @bot.command(pass_context=True)
 async def info(ctx):
-    await ctx.send('~ban [Ник] [Причина]\n~mute [Ник] [Время в минутах] [Причина]\n~unmute [Ник]\n~kick [Ник] [Причина]\n~clear [Количество сообщений]\n~info_player')
+    await ctx.send('~ban [Ник] [Причина]\n~mute [Ник] [Время в минутах] [Причина]\n~unmute [Ник]\n~kick [Ник] [Причина]\n~clear [Количество сообщений]\n~info_player\nВерсия:0.2')
 
-@bot.command()
+@bot.command(pass_context=True)
 @commands.has_permissions(administrator=True)
 async def mute(ctx,member:discord.Member,time:int,*,reason=None):
     guild = ctx.guild
@@ -62,7 +62,7 @@ async def mute(ctx,member:discord.Member,time:int,*,reason=None):
     await asyncio.sleep(time*60)
     await member.remove_roles(muterole)
 
-@bot.command()
+@bot.command(pass_context=True)
 @commands.has_permissions(administrator=True)
 async def unmute(ctx,member:discord.Member):
     guild = ctx.guild
@@ -71,6 +71,13 @@ async def unmute(ctx,member:discord.Member):
     await ctx.send(f"C {member} досрочно снят мут")
     await member.send(f'Тебя досрочно размутили на {guild.name}')
 
+@bot.command(pass_context=True)
+async def kosaryk(ctx, arg):
+    await ctx.send(arg)
+
+@bot.command(pass_context=True)
+async def info(ctx):
+    await ctx.send("ПИЗДА БЛЯТЬ ХУЙ СОСАТЬ")
 
 @bot.event
 async def on_ready():
