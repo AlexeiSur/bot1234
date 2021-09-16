@@ -7,7 +7,6 @@ import os
 bot = commands.Bot(command_prefix="~")
 
 @bot.command(pass_context=True)
-@commands.has_permissions(administrator=True)
 async def info_player(ctx,member:discord.Member):
     emb = discord.Embed(title='Информация о пользователе',color=0xff0000)
     emb.add_field(name="Когда присоединился:",value=member.joined_at,inline=False)
@@ -23,7 +22,7 @@ async def info_player(ctx,member:discord.Member):
 @commands.has_permissions(view_audit_log=True)
 async def ban(ctx,member:discord.Member,reason):
     channel = bot.get_channel(744584045807271989)
-    emb = discord.Embed(title="Кик",color=0xff0000)
+    emb = discord.Embed(title="Бан",color=0xff0000)
     emb.add_field(name='Модератор',value=ctx.message.author.mention,inline=False)
     emb.add_field(name='Нарушитель',value=member.mention,inline=False)
     emb.add_field(name='Причина',value=reason,inline=False)
