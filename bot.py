@@ -20,7 +20,7 @@ async def info_player(ctx,member:discord.Member):
     await ctx.send(embed = emb)
 
 @bot.command(pass_context=True)
-@commands.has_permissions(view_audit_log=True)
+@commands.has_permissions(administrator=True)
 async def ban(ctx,member:discord.Member,reason):
     channel = bot.get_channel(744584045807271989)
     emb = discord.Embed(title="Бан",color=0xff0000)
@@ -84,6 +84,10 @@ async def gay(ctx):
 @bot.command(pass_context=True)
 async def guk(ctx):
     await ctx.send("ПИЗДА БЛЯТЬ ХУЙ СОСАТЬ")
+    
+@bot.command(pass_context=True)
+async def rich(ctx):
+    await ctx.send("ричуня душнила")
 
 @bot.event
 async def on_ready():
