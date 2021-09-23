@@ -86,8 +86,9 @@ async def guk(ctx):
     await ctx.send("ПИЗДА БЛЯТЬ ХУЙ СОСАТЬ")
     
 @bot.command(pass_context=True)
-async def rich(ctx):
-    await ctx.send("ричуня душнила")
+async def hui(ctx,ghr):
+    await ctx.send(ghr)
+   
 
 @bot.event
 async def on_ready():
